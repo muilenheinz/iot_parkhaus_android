@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">IoTParkhaus</string>
+
+    <string name="tab_info">Info</string>
+    <string name="tab_map">Karte</string>
+    <string name="tab_legal">Rechtliches</string>
+
+    <string name="parkingSpotsHeadline">Alle Parkplätze (frei / belegt)</string>
+    <string name="womensParkingSpots">Frauenparkplätze (frei / belegt)</string>
+    <string name="disabledParkingSpots">Behindertenparkplätze (frei / belegt)</string>
+
+    <string name="legalText">
+        <![CDATA[
+        <b>Verkehrs- und Parkraumordnung der Hochschule Düsseldorf vom 06.07.2018</b>
+<p>Aufgrund der §§ 2 Abs. 4, 18 Abs. 1 des Gesetzes über die Hochschulen des Landes Nordrhein- Westfalen (HG NRW) vom 16.09.2014 (GV. NRW. S. 547) in der aktuell gültigen Fassung hat die Hochschule Düsseldorf die folgende Ordnung erlassen.</p>
+
+<b>Inhaltsverzeichnis</b>
+<p>
+§ 1 Räumlicher Geltungsbereich; Nutzerberechtigung<br>
+§ 2 Parken<br>
+§ 3 Öffnungszeiten<br>
+§ 4 Maßnahmen bei Nichtbeachtung<br>
+§ 5 Haftungsausschluss<br>
+§ 6 Schlussbestimmungen<br>
+</p>
+
+
+<b>§ 1 – Räumlicher Geltungsbereich; Nutzerberechtigung</b>
+<p>
+(1) Diese Verkehrs- und Parkraumordnung regelt die Sicherheit und Ordnung des rollenden und ruhen-<br>
+den Kfz-Verkehrs auf den Zufahrten, in der Tiefgarage sowie auf den Park-, Frei- und Stellflächen der Hochschule Düsseldorf (HSD), Campus Derendorf, Münsterstraße 156, 40476 Düsseldorf. Parkberech-tigt sind alle Hochschulangehörigen (insbesondere die Mitarbeiterinnen und Mitarbeiter der Hochschule und Studierende), Lehrbeauftragte und Gäste der HSD. Es besteht kein Anspruch auf einen Parkplatz.<br>
+(2) Eine Parkberechtigung kann gesondert im Rahmen eines Vertragsverhältnisses oder auf Antrag erteilt werden.<br>
+(3) Nichtberechtigte können in die Tiefgarage einfahren, müssen diese aber innerhalb von 45 Minuten wieder verlassen.<br>
+(4) Das Parken ist auf allen ausgewiesenen und markierten Stellplätzen, im Rahmen der vorhandenen Kapazitäten erlaubt. Technische Störungen können beim Empfang in Gebäude 4 oder dem Dezernat Gebäudemanagement mitgeteilt werden.<br>
+(5) Das Parken auf den als reserviert ausgewiesenen Flächen ist ausschließlich mit Sondergenehmigung erlaubt. Auf Parkflächen für Schwerbehinderte ist das Parken nur unter Vorlage eines behördlich ausgestellten Schwerbehindertenparkausweises (blau / orange) oder durch Sondergenehmigung der HSD erlaubt. Durch Antrag der Schwerbehindertenvertretung werden in besonderen Ausnahmefällen weitere Sondergenehmigungen zur Parkerleichterung erteilt. Auf Wunsch stellt die Hochschule diese pseudonymisiert aus.<br>
+(6) Das Parken auf den als Frauenparkplätzen gekennzeichneten Parkplätzen i.S.v. § 125 SBauVO NRW ist ausschließlich der Benutzung durch Frauen vorbehalten. Die Frauenparkplätze und die je- weiligen anliegenden Treppenhäuser werden videoüberwacht.<br>
+(7) Darüber hinaus sind Park- bzw. Abstellflächen für Fahrräder ausgewiesen.<br>
+(8) Auf den Freiflächen des Campus ist das kurzzeitige Parken und Befahren von Gehwegen und Grünflächen mit Sondergenehmigung nur Lieferanten sowie Fahrzeugen gestattet, die der Bewirtschaftung des Geländes dienen. Ausnahmen müssen beim Dezernat Gebäudemanagement beantragt werden. Die Zufahrt erfolgt in der Regel über die separierte Spur auf der Toulouser Allee. Die Zufahrt ist video-überwacht.<br>
+(9) Die Außenanlagen halten in bestimmten Bereichen einer Belastung über 7,5 Tonnen nicht Stand. Für LKW über 7,5 Tonnen ist daher eine Abstimmung mit dem Gebäudemanagement erforderlich.<br>
+(10) Baustellenfahrzeuge, Lieferanten und Handwerker können auf Antrag beim Dezernat Gebäudemanagement einen Parkausweis erhalten, welcher auch das Parken außerhalb der gekennzeichneten Flächen legitimiert. Abs. 4 bleibt hiervon unberührt. Der Parkausweis ist gut sichtbar im Fahrzeug anzubrin-gen und gilt nur für die Dauer der Tätigkeit an der HSD. Nach Beendigung der Tätigkeit ist der Ausweis bei dem Dezernat Gebäudemanagement abzugeben.<br>
+</p>
+
+<b>§ 2 – Parken</b>
+<p>
+(1) Die Zufahrten zu den Parkplätzen auf diesem Gelände sind mit einer Schrankenanlage versehen. Die Schrankenanlage kann mit einer freigeschalteten HSD-Karte zum Befahren und Parken oder mit der Anforderung eines Papiertickets geöffnet werden. Technische Störungen können beim Empfang in Gebäude 4 oder dem Dezernat Gebäudemanagement mitgeteilt werden. Das Papierticket ist nach der Einfahrt für die Dauer von 45 Minuten freigeschaltet. Bei einer längeren Nutzung des Parkhauses muss das Papierticket am Empfang der HSD im Gebäude 4 freigeschaltet werden.<br>
+(2) Es gelten auf allen Flächen die Vorschriften der StVO und der StVZO. Die Hinweisschilder sind zu beachten.<br>
+(3) Auf allen Zufahrten, Park-, Frei- und Stellflächen sowie in der Tiefgarage der HSD gilt Schrittgeschwindigkeit.<br>
+(4) Das Rauchen in der Tiefgarage und das Verwenden von offenem Feuer, Betanken, Instandsetzungsarbeiten, längeres Laufenlassen des Motors, das Abstellen nicht zugelassener oder defekter Fahrzeuge sowie das Aufbewahren von brennbaren Stoffen außerhalb von Kraftfahrzeugen ist nicht gestattet.<br>
+(5) Das Parken für Hochschulangehörige ist für die Dauer von max. 72 h zulässig. Bei begründetem Bedarf kann eine längere Parkberechtigung gesondert auf Antrag durch das Dezernat Gebäudemanagement erteilt werden.<br>
+</p>
+<b>§ 3 – Öffnungszeiten</b>
+<p>(1) Die jeweiligen Öffnungszeiten der Tiefgarage werden in geeigneter Form (z.B. durch Beschilderung, Aushänge, über das Internet und/oder auf der Homepage der Hochschule Düsseldorf) bekannt gegeben.<br>
+(2) Außerhalb der Öffnungszeiten ist eine Ein- bzw. Ausfahrt nur von Berechtigten möglich.<br>
+</p>
+<b>§ 4 – Maßnahmen bei Nichtbeachtung</b>
+<p>(1) Im Falle eines Verstoßes gegen diese Ordnung, vor allem bei ordnungswidrigem Parken, werden Fahrzeuge kostenpflichtig abgeschleppt.<br>
+(2) Ordnungswidrig parkt, wer mit seinem Fahrzeug:<br>
+- außerhalb der ausgewiesenen und markierten Stellplätze parkt,<br>
+- Feuerwehrzufahrts- oder Rettungswege blockiert,<br>
+- das Befahren oder Verlassen einzelner oder mehrerer Stellplätze behindert,<br>
+- ohne Berechtigung auf einem für Menschen mit Behinderung ausgewiesenen Parkplatz parkt,<br>
+- ohne Berechtigung auf einem ausgewiesenen Frauenparkplatz parkt,<br>
+- zum wiederholten Male unberechtigt die Parkflächen nutzt<br>
+- ohne Berechtigung auf reservierten Parkplätzen parkt,<br>
+- unberechtigt die Höchstparkdauer überschreitet,<br>
+- die Nutzung der Parkfläche auf andere Weise ordnungswidrig stört.<br>
+(3) Wird der Abschleppdienst aufgrund von ordnungswidrigem Parken bestellt, so sind die Anfahrtskosten auch dann zu tragen, wenn der Abschleppvorgang nicht ausgeführt wird.<br>
+(4) Die entstandenen Kosten werden seitens des Abschleppdienstes in Rechnung gestellt, hierfür haften Fahrzeugführer und Fahrzeughalter gesamtschuldnerisch. Des Weiteren haften sie für Schäden, die durch das abgeschleppte Fahrzeug verursacht werden.<br>
+(5) Verstöße gegen die Parkordnung können die Löschung der Freischaltung der HSD-Karte für die Betätigung der Schrankenanlage nach sich ziehen und/oder nach den gesetzlichen Vorschriften geahndet werden.<br>
+(6) Nichtberechtigte, die länger als 45 Minuten parken, müssen sich beim Empfang melden, um das Papierticket freischalten zu lassen. Bei erstmaligem Überschreiten der Parkdauer von 45 Minuten wer-den folgende Informationen des unberechtigt Parkenden aufgenommen: KFZ-Kennzeichen, Name des Fahrers, Adresse des Fahrers.<br>
+(7) Bei einem weiteren Überschreiten der Parkdauer von 45 Minuten wird gegenüber dem Nichtberech-tigten ein Parkverbot durch die Präsidentin ausgesprochen.<br>
+(8) Parkt ein Nichtberechtigter sein Fahrzeug, obwohl ihm gegenüber ein Parkverbot ausgesprochen worden ist, so wird das Fahrzeug kostenpflichtig durch ein externes Unternehmen abgeschleppt. Die erhobenen Informationen i.S.v. § 4 Abs. 6 dieser Ordnung werden in diesem Fall an das externe Ab-schleppunternehmen weitergegeben, damit das verbotswidrig abgestellte Fahrzeug abgeschleppt wer-den kann.<br>
+</p>
+<b>§ 5 – Haftungsausschluss</b>
+<p>
+(1) Die Benutzung aller Flächen, Zufahrten, Park- und Stellplätze erfolgt auf eigene Gefahr. Die HSD ist nicht verpflichtet, abgestellte Fahrzeuge zu bewachen. Auf den Außenanlagen wird teilweise nur ein beschränkter Winterdienst durchgeführt. Das Verhalten ist den Witterungsverhältnissen entsprechend anzupassen.<br>
+(2) Die HSD haftet im Rahmen der gesetzlichen Vorschriften. Für Personen-, Sach- oder Vermögensschäden durch Dritte - insbesondere bei Beschädigung, Einbruch oder Diebstahl des Kraftfahrzeuges - sowie für entstehende Schäden beim Abschleppen unberechtigt und/oder falsch parkender Fahrzeuge haftet weder die HSD noch das Land Nordrhein-Westfalen.<br>
+</p>
+
+<b>§ 6 – Schlussbestimmungen</b>
+<p>Diese Verkehrs- und Parkraumordnung tritt am Tage nach ihrer Veröffentlichung im Verkündungsblatt der Hochschule Düsseldorf in Kraft. Ausgefertigt aufgrund des Beschlusses der Präsidentin vom 14.05.2018.</p>
+
+<p>
+Düsseldorf, den 06.07.2018<br>
+<br><br>
+gez.<br>
+Die Präsidentin<br>
+der Hochschule Düsseldorf<br>
+Prof. Dr. Brigitte Grass ​<br>
+</p>
+]]>
+    </string>
+</resources>
+
