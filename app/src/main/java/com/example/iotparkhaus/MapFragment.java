@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.github.nkzawa.emitter.Emitter;
@@ -26,6 +27,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
 
 
 public class MapFragment extends Fragment {
@@ -34,6 +37,7 @@ public class MapFragment extends Fragment {
     private View mapView;
     private Socket mSocket;
     private int i = 0;
+    private TextView connStateText;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -54,63 +58,38 @@ public class MapFragment extends Fragment {
 
 
         mapView = inflater.inflate(R.layout.map_fragment, container, false);
-        sendMsg = mapView.findViewById(R.id.sendMsg);
+//        sendMsg = mapView.findViewById(R.id.sendMsg);
 
-        final TextView connStateText = mapView.findViewById(R.id.connState);
+        connStateText = mapView.findViewById(R.id.connState);
 
         try {
-            IO.Options opts = new IO.Options();
-//            opts.forceNew = true;
-//            opts.reconnection = true;
-//            opts.upgrade = false;
+            IO.Options opt = new IO.Options();
+            opt.transports = new String[]{
+                "websocket"
+            };
 
-                mSocket = IO.socket("https://socketio-chat.now.sh/", opts);
-                mSocket.connect();
-                mSocket.open();
+            mSocket = IO.socket("https://iot-parkhaus.midb.medien.hs-duesseldorf.de/", opt);
 
-
-            mSocket.io().on(Manager.EVENT_TRANSPORT, new Emitter.Listener() {
+//            mSocket.on("null", onParkingPatched);
+//            mSocket.on("parking patched", onParkingPatched);
+            mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    Transport transport = (Transport) args[0];
-                    transport.on(Transport.EVENT_ERROR, new Emitter.Listener() {
-                        @Override
-                        public void call(Object... args) {
-                            Exception e = (Exception) args[0];
-//                            Log.e(TAG, "Transport error " + e);
-//                            e.printStackTrace();
-//                            e.getCause().printStackTrace();
-                              connStateText.setText(e.getMessage());
-//                            Writer writer = new StringWriter();
-//                            e.printStackTrace(new PrintWriter(writer));
-//                            String s = writer.toString();
-//                            connStateText.setText(s);
-                        }
-                    });
+                    System.out.println("socket connected: " + String.valueOf(mSocket.connected()));
                 }
             });
-//
-//
-////            mSocket.open();
-//
-            if (mSocket.connected()) {
-                connStateText.setText("connected");
-            } else {
-                connStateText.setText("not connected");
-            }
-//
-//            mSocket.emit("add user", "test123");
-//            mSocket.on("new message", handleIncomingMessages);
-//
-//
-//            sendMsg.setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View v) {
-//                    //sendMsg.setText("Tried sending to socket.io");
-//                    mSocket.emit("message", "this is a message to toju");
-//                }
-//            });
+            mSocket.connect();
+
+            mSocket.emit("find", "parking", new Ack() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("heureka");
+                    System.out.println(args[1]);
+                }
+            });
+
         } catch (Exception e) {
-            connStateText.setText(e.getMessage());
+            e.printStackTrace();
         }
 
         return mapView;
@@ -125,32 +104,27 @@ public class MapFragment extends Fragment {
 
 
 
-    private Emitter.Listener handleIncomingMessages = new Emitter.Listener(){
-        @Override
-        public void call(final Object... args){
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String message;
-                    String imageText;
-                    try {
-                        message = data.getString("text").toString();
-                        sendMsg.setText(message);
-                    } catch (JSONException e) {
-                        // return;
-                    }
-                    try {
-                        imageText = data.getString("image");
-                        //addImage(decodeImage(imageText));
-                    } catch (JSONException e) {
-                        //retur
-                    }
 
-                }
-            });
-        }
-    };
+//    private Emitter.Listener onParkingPatched = new Emitter.Listener(){
+//        @Override
+//        public void call(final Object... args){
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                JSONObject data = (JSONObject) args[0];
+//                String message;
+//                connStateText.setText("Test");
+////                connStateText.setText("got message");
+////                try {
+////                    message = data.getString("message");
+////                    connStateText.setText(message);
+////                } catch (JSONException e) {
+////                    connStateText.setText(e.getMessage());
+////                }
+//                }
+//            });
+//        }
+//    };
 
 
 
