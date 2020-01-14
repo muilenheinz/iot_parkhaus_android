@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.caverock.androidsvg.SVG;
@@ -49,8 +50,6 @@ public class MapFragment extends Fragment {
 
     private MapViewModel mViewModel;
     private View mapView;
-    private Socket mSocket;
-    private TextView totalSpotsNumber, womenSpotsNumber, disabledSpotsNumber;
     private ImageView img;
     private SVG svg;
     private String svgString;
@@ -71,9 +70,15 @@ public class MapFragment extends Fragment {
         setHasOptionsMenu(true);
 
         SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
-
-        parkingStats stats = new parkingStats(1, 2, 3);
-        socketViewModel.setName(stats);
+        socketViewModel.getParkingStats().observe(requireActivity(), new Observer<parkingStats>() {
+            @Override
+            public void onChanged(@Nullable parkingStats s) {
+                System.out.println("observer (MapFragment) listened to change: " + s.getDisabledFreeSpots());
+//                totalSpotsNumber.setText(String.valueOf(s.getDisabledFreeSpots()));
+            }
+        });
+//        parkingStats ps = new parkingStats(1,2,3);
+//        socketViewModel.setParkingStats(ps);
     }
 
     @Override
@@ -81,11 +86,6 @@ public class MapFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         mapView = inflater.inflate(R.layout.map_fragment, container, false);
-        totalSpotsNumber = mapView.findViewById(R.id.totalNumber);
-        womenSpotsNumber = mapView.findViewById(R.id.womenNumber);
-        disabledSpotsNumber = mapView.findViewById(R.id.disabledNumber);
-
-        System.out.println("found totalSpotsNumber" + totalSpotsNumber);
 
         getSVG();
 
@@ -96,7 +96,12 @@ public class MapFragment extends Fragment {
         }
 
         drawParkingGarage();
-        connectToSocket();
+//        SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
+//        parkingStats stats = new parkingStats(1,2,3);
+
+//        System.out.println("send stats to ViewModel");
+//        socketViewModel.setParkingStats(stats);
+
 
         return mapView;
     }
@@ -111,71 +116,6 @@ public class MapFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSocket.disconnect();
-    }
-
-    public void connectToSocket() {
-        System.out.println("connect to socket");
-        try {
-            IO.Options opt = new IO.Options();
-            opt.transports = new String[]{
-                "websocket"
-            };
-
-            mSocket = IO.socket("https://iot-parkhaus.midb.medien.hs-duesseldorf.de/", opt);
-
-            mSocket.on("parking patched", onParkingPatchedForMap);
-            mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    System.out.println("socket connected!");
-                }
-            });
-            mSocket.connect();
-
-            mSocket.emit("find", "parking", new Ack() {
-                @Override
-                public void call(Object... args) {
-                 try {
-                     //draw the initial occupation of the parkingGarage, which is in the result of the find parking message
-                     JSONArray array = new JSONArray(args[1].toString());
-
-                     for (int i = 0; i < array.length(); i++) {
-                         JSONObject row = array.getJSONObject(i);
-                         occupyParkingSpot(row.getString("number"), row.getBoolean("available"));
-                     }
-
-                     drawParkingGarage();
-                 } catch (Exception e) {
-                     System.out.println("unable to parse JSON!");
-                 }
-                }
-            });
-
-            mSocket.emit("find", "stats", new Ack() {
-                @Override
-                public void call(Object... args) {
-                try {
-                    JSONArray array = new JSONArray(args[1].toString());
-                    JSONObject row = array.getJSONObject(0);
-
-                    System.out.println(row);
-
-                    totalFreeSpots = row.getInt("freeParking");
-                    womenFreeSpots = row.getInt("freeWomenParking");
-                    disabledFreeSpots = row.getInt("freeDisabledParking");
-
-                    System.out.println(totalFreeSpots + " " + womenFreeSpots + " " + disabledFreeSpots);
-//                    writeStats();
-                } catch (Exception e) {
-                    System.out.println("(163) not able to parse JSON!");
-                    e.printStackTrace();
-                }
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void drawParkingGarage() {
@@ -320,27 +260,7 @@ public class MapFragment extends Fragment {
 
     }
 
-    private Emitter.Listener onParkingPatchedForMap = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        JSONObject newSpotData = (JSONObject) args[0];
-                        occupyParkingSpot(newSpotData.getString("number"), newSpotData.getBoolean("available"));
-                        drawParkingGarage();
-                    } catch (Exception e) {
-                        System.out.println("Unable to parse JSON!");
-                    }
-                }
-            });
-        }
-    };
 
-    private void writeStats() {
-        totalSpotsNumber.setText(String.valueOf(totalFreeSpots));
-        womenSpotsNumber.setText(String.valueOf(womenFreeSpots));
-        disabledSpotsNumber.setText(String.valueOf(disabledFreeSpots));
-    }
+
+
 }
