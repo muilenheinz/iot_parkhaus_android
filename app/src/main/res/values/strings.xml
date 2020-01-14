@@ -90,5 +90,12 @@ Prof. Dr. Brigitte Grass ​<br>
 </p>
 ]]>
     </string>
+    <string name="total">Gesamt</string>
+    <string name="thereof">Davon</string>
+    <string name="freeSpots">Freie Parkplätze</string>
+    <string name="womenSpots">Frauenparkplätze</string>
+    <string name="disabledSpots">Behindertenparkplätze</string>
 </resources>
+
+
 

@@ -1,53 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:baselineAligned="false"
     android:layout_height="match_parent"
     android:stretchColumns="1">
 
-    <TableRow>
+    <LinearLayout
+        android:id="@+id/TotalContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:orientation="vertical">
 
         <TextView
-            android:layout_column="1"
-            android:layout_marginBottom="10dp"
-            android:padding="3dip"
-            android:text="@string/parkingSpotsHeadline"
-            android:textStyle="bold" />
+            android:id="@+id/totalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="@string/total" />
 
         <TextView
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="100/700" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:layout_column="1"
-            android:layout_marginBottom="10dp"
-            android:padding="3dip"
-            android:text="@string/womensParkingSpots"
-            android:textStyle="bold" />
+            android:id="@+id/totalNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:layout_weight="1"
+            android:textSize="36sp" />
 
         <TextView
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="10/13" />
-    </TableRow>
+            android:id="@+id/totalSpotlabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/freeSpots" />
 
-    <TableRow>
+        <View
+            android:id="@+id/horizontalBorderline"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#37474f" />
 
-        <TextView
-            android:layout_column="1"
-            android:layout_marginBottom="10dp"
-            android:padding="3dip"
-            android:text="@string/disabledParkingSpots"
-            android:textStyle="bold" />
+    </LinearLayout>
 
-        <TextView
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="5/10" />
-    </TableRow>
+    <LinearLayout
+        android:id="@+id/BottomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/WomenContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/womenLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/thereof" />
+
+            <TextView
+                android:id="@+id/womenNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="0"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/womenSpotlabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/womenSpots" />
 
 
-</TableLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/verticalBorderline"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#37474f" />
+
+        <LinearLayout
+            android:id="@+id/DisabledContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/disabledLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/thereof" />
+
+            <TextView
+                android:id="@+id/disabledNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="0"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/disabledSpotlabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/disabledSpots" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
