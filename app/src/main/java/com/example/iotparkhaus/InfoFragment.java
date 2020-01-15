@@ -35,8 +35,6 @@ public class InfoFragment extends Fragment {
         womenSpotsNumber = infoView.findViewById(R.id.womenNumber);
         disabledSpotsNumber = infoView.findViewById(R.id.disabledNumber);
 
-
-
         SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
         socketViewModel.getParkingStats().observe(requireActivity(), new Observer<parkingStats>() {
             @Override
