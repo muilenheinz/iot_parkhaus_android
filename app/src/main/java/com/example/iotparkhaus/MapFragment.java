@@ -3,40 +3,22 @@ package com.example.iotparkhaus;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.example.iotparkhaus.customDataStructs.constants;
 import com.example.iotparkhaus.customDataStructs.parkingGarageOccupation;
-import com.example.iotparkhaus.customDataStructs.parkingStats;
-import com.larvalabs.svgandroid.SVGParser;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
+import java.util.Map;
 
 
 public class MapFragment extends Fragment {
@@ -46,9 +28,6 @@ public class MapFragment extends Fragment {
     private ImageView img;
     private SVG svg;
     private String svgString;
-    public static MapFragment newInstance() {
-        return new MapFragment();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +50,7 @@ public class MapFragment extends Fragment {
         mapView = inflater.inflate(R.layout.map_fragment, container, false);
 
         try {
-            svgString = new AsyncFetchSVGTask().execute("https://iot-parkhaus.midb.medien.hs-duesseldorf.de/parking.svg").get();
+            svgString = new AsyncFetchSVGTask().execute(constants.getSvgUrl()).get();
         } catch(Exception e ) {
             e.printStackTrace();
         }
@@ -111,12 +90,12 @@ public class MapFragment extends Fragment {
 
     private void occupyParkingSpot(String spotNumber, Boolean available) {
         //define default color values for available parking spots
-        String backgroundColor = "rgb(19, 97, 194)";
-        String textColor = "rgb(255, 255, 255)";
+        String backgroundColor = constants.getBackgroundColorSpotAvilable();
+        String textColor = constants.getTextColorSpotAvilable();
 
         if (!available) {
-            backgroundColor = "rgb(185,185,185)";
-            textColor = "rgb(139, 139, 139)";
+            backgroundColor = constants.getBackgroundColorSpotOccupied();
+            textColor = constants.getTextColorSpotOccupied();
         }
 
         replaceAttributeInSVG(spotNumber,"space", "fill", backgroundColor);
@@ -153,11 +132,9 @@ public class MapFragment extends Fragment {
     }
 
     private void occupyParkingGarage(parkingGarageOccupation _occupation) {
-        Iterator iterator = _occupation.getOccupation().entrySet().iterator();
-        while (iterator.hasNext()) {
-            HashMap.Entry occupationRow = (HashMap.Entry) iterator.next();
-            occupyParkingSpot(String.format("%03d", occupationRow.getKey()),
-                    Boolean.valueOf(occupationRow.getValue().toString()));
+        for (Map.Entry<Integer, Boolean> integerBooleanEntry : _occupation.getOccupation().entrySet()) {
+            occupyParkingSpot(String.format("%03d", integerBooleanEntry.getKey()),
+                    Boolean.valueOf(integerBooleanEntry.getValue().toString()));
         }
         drawParkingGarage();
     }

@@ -17,14 +17,16 @@
     <string name="leaders">Leitung und Unterstützung</string>
 
     <string name="implementer1">B. Sc. Paul Schwörer</string>
-    <string name="implementer2">B. Sc. Tobias Müller</string>
+    <string name="implementer2">B. A. Tobias Müller</string>
     <string name="implementer3">B. Sc. Tobias Jung</string>
 
     <string name="leader1">Prof. Dr. Gundula Dörries</string>
     <string name="leader2">B. Eng. Patrick Blättermann</string>
 
     <string name="otherHeader">Weiteres</string>
+
     <string name="garageRules">Parkraumordnung</string>
+    <string name="impressum">Impressum / Datenschutz der HSD</string>
 
 
 </resources>

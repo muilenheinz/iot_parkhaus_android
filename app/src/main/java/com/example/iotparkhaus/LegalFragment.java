@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.example.iotparkhaus.customDataStructs.constants;
 
 public class LegalFragment extends Fragment {
 
@@ -35,13 +36,15 @@ public class LegalFragment extends Fragment {
 
         final View legalView = inflater.inflate(R.layout.legal_fragment, container, false);
 
+        //this does not work when the complete tag is loaded from strings.xml,
+        //so for syntactical reasons get the URLs from the constants class and the text from strings.xml
         impressumView = legalView.findViewById(R.id.impressum);
-        String impressum = "<a href=\"https://hs-duesseldorf.de/impressum\">Impressum / Datenschutz der HSD</a>";
+        String impressum = "<a href=\""+constants.getURL_impressum()+"\">" + getResources().getString(R.string.impressum) + "</a>";
         impressumView.append(Html.fromHtml(impressum));
         impressumView.setMovementMethod(LinkMovementMethod.getInstance());
 
         parkingRules = legalView.findViewById(R.id.parkingRules);
-        String legal = "<a href=\"https://hs-duesseldorf.de/hochschule/verwaltung/parkraumordnung\">Parkraumordnung</a>";
+        String legal = "<a href=\"" + constants.getURL_parkingRules() + "\">" + getResources().getString(R.string.garageRules) +"</a>";
         parkingRules.append(Html.fromHtml(legal));
         parkingRules.setMovementMethod(LinkMovementMethod.getInstance());
 
