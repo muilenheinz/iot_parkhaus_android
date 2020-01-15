@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ import android.widget.TextView;
 public class LegalFragment extends Fragment {
 
     private LegalViewModel mViewModel;
-    private Context context = null;
+    private TextView parkingRules, impressumView;
+
 
     public static LegalFragment newInstance() {
         return new LegalFragment();
@@ -31,17 +33,17 @@ public class LegalFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        //load the legal text as html, so it can be styled "inline"
         final View legalView = inflater.inflate(R.layout.legal_fragment, container, false);
-        TextView legalTextView = legalView.findViewById(R.id.legalText);
-        String legalText = getString(R.string.legalText);
 
-        //first if case is the "current solution", other one is deprecated, use for backward compatibility
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            legalTextView.setText(Html.fromHtml(legalText,Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            legalTextView.setText(Html.fromHtml(legalText));
-        }
+        impressumView = legalView.findViewById(R.id.impressum);
+        String impressum = "<a href=\"https://hs-duesseldorf.de/impressum\">Impressum / Datenschutz der HSD</a>";
+        impressumView.append(Html.fromHtml(impressum));
+        impressumView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        parkingRules = legalView.findViewById(R.id.parkingRules);
+        String legal = "<a href=\"https://hs-duesseldorf.de/hochschule/verwaltung/parkraumordnung\">Parkraumordnung</a>";
+        parkingRules.append(Html.fromHtml(legal));
+        parkingRules.setMovementMethod(LinkMovementMethod.getInstance());
 
         return legalView;
     }

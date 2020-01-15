@@ -3,15 +3,137 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/legalScrollView"
     android:layout_width="match_parent"
-
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:padding="0dp">
 
 
-    <TextView
-        android:id="@+id/legalText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:isScrollContainer="true" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ProjectTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/projectTitle"
+            android:textColor="#37474f"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subTitle"
+            android:textColor="#917a7a"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/implementationHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/implementation" />
+
+        <TextView
+            android:id="@+id/implementer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:text="@string/implementer1"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/implementer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:text="@string/implementer2"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/implementer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:text="@string/implementer3"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/leaderHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/leaders" />
+
+        <TextView
+            android:id="@+id/leader1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:text="@string/leader1"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/leader2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:text="@string/leader2"
+            android:textColor="@android:color/white" />
+
+
+        <TextView
+            android:id="@+id/otherHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/otherHeader" />
+
+        <TextView
+            android:id="@+id/impressum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/parkingRules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="#37474f"
+            android:padding="10dp"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
 
 </ScrollView>
