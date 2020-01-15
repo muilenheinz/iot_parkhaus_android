@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,30 +19,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
-import com.example.iotparkhaus.custom.parkingStats;
-import com.example.iotparkhaus.ui.main.PageViewModel;
-import com.github.nkzawa.socketio.client.Ack;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.engineio.client.Transport;
-import com.github.nkzawa.socketio.client.Manager;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.example.iotparkhaus.customDataStructs.parkingGarageOccupation;
+import com.example.iotparkhaus.customDataStructs.parkingStats;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class MapFragment extends Fragment {
@@ -70,15 +50,13 @@ public class MapFragment extends Fragment {
         setHasOptionsMenu(true);
 
         SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
-        socketViewModel.getParkingStats().observe(requireActivity(), new Observer<parkingStats>() {
+        socketViewModel.getOccupation().observe(requireActivity(), new Observer<parkingGarageOccupation>() {
             @Override
-            public void onChanged(@Nullable parkingStats s) {
-                System.out.println("observer (MapFragment) listened to change: " + s.getDisabledFreeSpots());
-//                totalSpotsNumber.setText(String.valueOf(s.getDisabledFreeSpots()));
+            public void onChanged(@Nullable parkingGarageOccupation s) {
+                System.out.println("changed occupation reached view");
+                occupyParkingGarage(s);
             }
         });
-//        parkingStats ps = new parkingStats(1,2,3);
-//        socketViewModel.setParkingStats(ps);
     }
 
     @Override
@@ -86,22 +64,7 @@ public class MapFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         mapView = inflater.inflate(R.layout.map_fragment, container, false);
-
         getSVG();
-
-        //set all parking spots to be available initially
-        for (int i = 1; i< parkingSpotsCount + 1; i++) {
-            String spot = String.format("%03d", i);
-            occupyParkingSpot(spot, true);
-        }
-
-        drawParkingGarage();
-//        SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
-//        parkingStats stats = new parkingStats(1,2,3);
-
-//        System.out.println("send stats to ViewModel");
-//        socketViewModel.setParkingStats(stats);
-
 
         return mapView;
     }
@@ -138,6 +101,45 @@ public class MapFragment extends Fragment {
 
     private String getSVG() {
         svgString = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 637.797 907.087\" width=\"637.797pt\" height=\"907.087pt\">\n" +
+                "    <style>\n" +
+                "        .space,\n" +
+                "        .symbol,\n" +
+                "        .number {\n" +
+                "        transition: fill 0.3s;\n" +
+                "        }\n" +
+                "\n" +
+                "        .space {\n" +
+                "        fill: #1361c2;\n" +
+                "        }\n" +
+                "\n" +
+                "        .symbol,\n" +
+                "        .number {\n" +
+                "        font-family: Roboto, sans-serif;\n" +
+                "        fill: #fff;\n" +
+                "        font-style: normal;\n" +
+                "        stroke: none;\n" +
+                "        }\n" +
+                "\n" +
+                "        .symbol {\n" +
+                "        font-weight: 400;\n" +
+                "        font-size: 28px;\n" +
+                "        }\n" +
+                "\n" +
+                "        .number {\n" +
+                "        font-weight: 700;\n" +
+                "        }\n" +
+                "\n" +
+                "        .occupied {\n" +
+                "        .space {\n" +
+                "        fill: rgb(185, 185, 185);\n" +
+                "        }\n" +
+                "\n" +
+                "        .symbol,\n" +
+                "        .number {\n" +
+                "        fill: #8b8b8b;\n" +
+                "        }\n" +
+                "        }\n" +
+                "    </style>\n" +
                 "    <defs>\n" +
                 "        <clipPath id=\"_clipPath_kps33JfZoSy5W52p1Pc4vRtUlMFjbvoL\">\n" +
                 "            <rect width=\"637.797\" height=\"907.087\"/>\n" +
@@ -148,7 +150,7 @@ public class MapFragment extends Fragment {
                 "        <rect x=\"0\" y=\"311.811\" width=\"637.795\" height=\"283.465\" transform=\"matrix(1,0,0,1,0,0)\" fill=\"rgb(116,116,116)\"/>\n" +
                 "        <g class=\"parking parking-008\" id=\"parking-008\">\n" +
                 "            <rect class=\"space\" x=\"481.89\" y=\"609.449\" width=\"141.732\" height=\"283.465\" transform=\"matrix(1,0,0,1,0,0)\" fill=\"rgb(185,185,185)\"/>\n" +
-                "            <text class=\"symbol\" transform=\"matrix(2.959,0,0,2.959,523.785,761.116)\">\n" +
+                "            <text class=\"symbol\" transform=\"matrix(2.959,0,0,2.959,523.785,761.116)\" style=\"\">\n" +
                 "                P\n" +
                 "            </text>\n" +
                 "            <text class=\"number\" transform=\"matrix(2.959,0,0,2.959,504.118,824.789)\">\n" +
@@ -222,9 +224,6 @@ public class MapFragment extends Fragment {
 
     private void occupyParkingSpot(String spotNumber, Boolean available) {
         //define default color values for available parking spots
-
-        System.out.println("occupyPS" + spotNumber + ", " + available.toString());
-
         String backgroundColor = "rgb(19, 97, 194)";
         String textColor = "rgb(255, 255, 255)";
 
@@ -242,25 +241,38 @@ public class MapFragment extends Fragment {
         int beginOfSVGParent = svgString.indexOf("parking-" + concernedSpot);
         int beginOfSubTag = svgString.indexOf(className, beginOfSVGParent);
         int endOfSubTag = svgString.indexOf(">", beginOfSubTag);
+        String styleIdentifier = "style=\"";
+        int beginOfStyleProp = svgString.indexOf(styleIdentifier, beginOfSubTag);
+        int endOfStyleProp = svgString.indexOf("\"", beginOfStyleProp + styleIdentifier.length());
 
-        //find occurrence of attribute
-        if (svgString.indexOf(attributeName, beginOfSubTag) < endOfSubTag && svgString.indexOf(attributeName, beginOfSubTag) != -1) {
-            //attribute occurs in tag
-            int beginOfAttribute = svgString.indexOf(attributeName + "=", beginOfSubTag);
-            int endOfAttribute = svgString.indexOf("\"", beginOfAttribute + className.length() + 2);
-
-            svgString = svgString.substring(0, beginOfAttribute) +
-                    attributeName + "=\"" + newAttributeValue + "\""
-                    + svgString.substring(endOfAttribute + 1);
+        //element has style prop
+        if (beginOfStyleProp < endOfSubTag && beginOfStyleProp != -1) {
+            //style prop of element has a property of attributeName
+            if (svgString.indexOf(attributeName, beginOfStyleProp) < endOfStyleProp
+                && svgString.indexOf(attributeName, beginOfStyleProp) != -1) {
+                    svgString = svgString.substring(0, svgString.indexOf(attributeName, beginOfStyleProp) + 5) +
+                        newAttributeValue  + svgString.substring(endOfStyleProp);
+            } else {
+                //style prop of element has no property of attributeName, so add it
+                svgString = svgString.substring(0, beginOfStyleProp + styleIdentifier.length())
+                        + attributeName + ":" + newAttributeValue +
+                        svgString.substring(beginOfStyleProp + styleIdentifier.length());
+            }
         } else {
             //Attribute does not occur in element, so simply add it
-            svgString = svgString.substring(0, beginOfSubTag + className.length() + 1) + " " + attributeName + "=\"" + newAttributeValue + "\"" +
-                            svgString.substring(beginOfSubTag + className.length() + 1);
+            svgString = svgString.substring(0, beginOfSubTag + className.length() + 1) + " style=\"" + attributeName + ":" + newAttributeValue + "\"" +
+                    svgString.substring(beginOfSubTag + className.length() + 1);
         }
-
     }
 
-
-
+    private void occupyParkingGarage(parkingGarageOccupation _occupation) {
+        Iterator iterator = _occupation.getOccupation().entrySet().iterator();
+        while (iterator.hasNext()) {
+            HashMap.Entry occupationRow = (HashMap.Entry) iterator.next();
+            occupyParkingSpot(String.format("%03d", occupationRow.getKey()),
+                    Boolean.valueOf(occupationRow.getValue().toString()));
+        }
+        drawParkingGarage();
+    }
 
 }

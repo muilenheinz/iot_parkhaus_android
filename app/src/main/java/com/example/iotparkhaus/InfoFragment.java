@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.iotparkhaus.custom.parkingStats;
+import com.example.iotparkhaus.customDataStructs.parkingStats;
 
 public class InfoFragment extends Fragment {
 
@@ -34,6 +34,8 @@ public class InfoFragment extends Fragment {
         totalSpotsNumber = infoView.findViewById(R.id.totalNumber);
         womenSpotsNumber = infoView.findViewById(R.id.womenNumber);
         disabledSpotsNumber = infoView.findViewById(R.id.disabledNumber);
+
+
 
         SocketViewModel socketViewModel = ViewModelProviders.of(requireActivity()).get(SocketViewModel.class);
         socketViewModel.getParkingStats().observe(requireActivity(), new Observer<parkingStats>() {

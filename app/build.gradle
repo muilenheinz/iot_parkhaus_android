@@ -37,3 +37,14 @@ dependencies {
     implementation 'com.caverock:androidsvg-aar:1.4'
     implementation 'com.google.code.gson:gson:2.8.6'
 }
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == "com.android.support") {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion "26.+"
+            }
+        }
+    }
+}

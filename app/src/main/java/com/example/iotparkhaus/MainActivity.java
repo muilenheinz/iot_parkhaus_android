@@ -2,22 +2,17 @@ package com.example.iotparkhaus;
 
 import android.os.Bundle;
 
-import com.example.iotparkhaus.custom.parkingStats;
+import com.example.iotparkhaus.customDataStructs.parkingGarageOccupation;
+import com.example.iotparkhaus.customDataStructs.parkingStats;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.example.iotparkhaus.ui.main.SectionsPagerAdapter;
 
@@ -33,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             mSocket = IO.socket("https://iot-parkhaus.midb.medien.hs-duesseldorf.de/", opt);
 
-//            mSocket.on("parking patched", onParkingPatchedForMap);
+            mSocket.on("parking patched", onParkingPatched);
             mSocket.on("stats patched", onStatsPatched);
 
             mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
@@ -65,25 +61,24 @@ public class MainActivity extends AppCompatActivity {
             });
             mSocket.connect();
 
-//            mSocket.emit("find", "parking", new Ack() {
-//                @Override
-//                public void call(Object... args) {
-//                    try {
-//                        //draw the initial occupation of the parkingGarage, which is in the result of the find parking message
-//                        JSONArray array = new JSONArray(args[1].toString());
-//
-//                        for (int i = 0; i < array.length(); i++) {
-//                            JSONObject row = array.getJSONObject(i);
-//                            occupyParkingSpot(row.getString("number"), row.getBoolean("available"));
-//                        }
-//
-//                        drawParkingGarage();
-//                    } catch (Exception e) {
-//                        System.out.println("unable to parse JSON!");
-//                    }
-//                }
-//            });
+            mSocket.emit("find", "parking", new Ack() {
+                @Override
+                public void call(Object... args) {
+                try {
+                    JSONArray array = new JSONArray(args[1].toString());
 
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject row = array.getJSONObject(i);
+                        parkingGarageOccupation.getInstance().addSpotOccupation(row.getInt("number"), row.getBoolean("available"));
+                    }
+
+                    socketViewModel.setOccupation(parkingGarageOccupation.getInstance());
+                } catch (Exception e) {
+                    System.out.println("alert!");
+                    e.printStackTrace();
+                }
+                }
+            });
 
             mSocket.emit("find", "stats", new Ack() {
                 @Override
@@ -96,23 +91,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private Emitter.Listener onParkingPatched = new Emitter.Listener() {
-//        @Override
-//        public void call(final Object... args) {
-//            MainActivity.this.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        JSONObject newSpotData = (JSONObject) args[0];
-//                        occupyParkingSpot(newSpotData.getString("number"), newSpotData.getBoolean("available"));
-//                        drawParkingGarage();
-//                    } catch (Exception e) {
-//                        System.out.println("Unable to parse JSON!");
-//                    }
-//                }
-//            });
-//        }
-//    };
+    private Emitter.Listener onParkingPatched = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject newSpotData = (JSONObject) args[0];
+                        parkingGarageOccupation.getInstance().addSpotOccupation(newSpotData.getInt("number"), newSpotData.getBoolean("available"));
+                        socketViewModel.setOccupation(parkingGarageOccupation.getInstance());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
 
     private Emitter.Listener onStatsPatched = new Emitter.Listener() {
         @Override
@@ -126,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void sendDataToViewModel(String input, boolean inputIsArray){
+    private JSONObject sendDataToViewModel(String input, boolean inputIsArray){
         try {
             JSONObject row;
             if (inputIsArray) {
@@ -141,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     protected void onDestroy() {
